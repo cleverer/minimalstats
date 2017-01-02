@@ -5,7 +5,7 @@ Still at a **very early** developement phase.
 ## TODO
 * Update Readme with installation
 * installer.php
-	* Database cretaion
+	* Database creation
 	* Check for installed version/database
 	* Config check
 * config.php
@@ -14,6 +14,9 @@ Still at a **very early** developement phase.
 	* User processing
 * view.php
 	* Data visualization
+* minimalstats.php
+	* Check for installation or else die
+* Localization
 
 
 ## Installation
