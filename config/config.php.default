@@ -12,7 +12,7 @@
 
 		const SITE_NAME = '';
 		
-		const LINE_COLOR = 'green';
+		const LINE_COLOR = 'forestgreen';
 		const BACKGROUND_COLOR = '#f7f7f9';
 		
 		const LINE_POSITION = 'top';
