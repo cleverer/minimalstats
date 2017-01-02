@@ -8,7 +8,7 @@
 	*/
 	class View extends MS {
 		
-		private function title() {
+		protected function title() {
 			echo 'View';
 		}
 		
