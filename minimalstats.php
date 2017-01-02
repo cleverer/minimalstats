@@ -13,6 +13,14 @@
 		protected $db = null;
 		private $outputPage;
 		
+		static function echoOrReturn($string, $echo = false) {
+			if ($echo) {
+				echo $string;
+			} else {
+				return $string;
+			}
+		}
+		
 		function __construct($installer = null, $outputPage = true) {
 						
 			$this->outputPage = $outputPage;
