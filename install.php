@@ -25,7 +25,16 @@
 			
 		}
 		
+		function checkConfig() {
+			if (0 != $this->db->connect_errno) {
+				echo '<div class="alert alert-warning"><strong>Database Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$this->db->connect_error.'</div>'; // TODO: Localization
+			} else {
+				echo '<div class="alert alert-success"><strong>Database Works.</strong></div>'; // TODO: Localization
+			}
+		}
+		
 	}
 	
 	$installer = new Installer();
+	$installer->checkConfig();
 ?>

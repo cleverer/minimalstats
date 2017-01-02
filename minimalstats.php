@@ -10,11 +10,11 @@
 	
 	class MS {
 	
-		private $db = null;
+		protected $db = null;
 		private $outputPage;
 		
 		function __construct($installer = null, $outputPage = true) {
-			
+						
 			$this->outputPage = $outputPage;
 			
 			ob_start();
@@ -23,11 +23,15 @@
 				$db = @new \mysqli(Config::DB_HOST, Config::DB_USER, Config::DB_PASSWORD, Config::DB_NAME);
 				
 				if ($db->connect_errno) {
-				    die('Connect Error: ' . $db->connect_errno);
+					if (true !== $installer) {
+						error_log('Connect Error: ' . $db->connect_errno."\n".$db->connect_error);
+						$this->outputPage = false;
+						die();
+					}
 				}
 				$db->set_charset("utf8");
 				$this->db = $db;
-			} else if ($installer !== true) {
+			} else if (true !== $installer) {
 				$this->outputPage = false;
 				die();
 			}
@@ -41,7 +45,7 @@
 			
 			$output = ob_get_contents();
 			ob_end_clean();
-			
+						
 			if ($this->outputPage) {
 				include 'templates/basicpage.php';
 			} else {
