@@ -2,12 +2,24 @@
 Minimal page stat script.  
 Still at a **very early** developement phase.
 
-## Installation
-TODO
+## TODO
+* Update Readme with installation
+* installer.php
+	* Database cretaion
+	* Check for installed version/database
+	* Config check
+* config.php
+	* Table Prefix
+* counter.php
+	* User processing
+* view.php
+	* Data visualization
 
+
+## Installation
 ### System requirements:
 * Apache
-* PHP >= 5.3.0
+* PHP >= 5.4.0
 	* mysqli extension
 * MySQL DB
 
