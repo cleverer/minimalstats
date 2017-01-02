@@ -21,7 +21,7 @@
 					),
 					'text' => array(
 						'x' => 6,
-						'y'=> Config::FONT_SIZE+4,
+						'y'=> Config::FONT_SIZE+2,
 						'span_x' => Config::WIDTH-4
 					)
 				),
@@ -34,7 +34,7 @@
 					),
 					'text' => array(
 						'x' => 4,
-						'y'=> Config::FONT_SIZE+4,
+						'y'=> Config::FONT_SIZE+2,
 						'span_x' => Config::WIDTH-6
 					)
 				),
@@ -47,7 +47,7 @@
 					),
 					'text' => array(
 						'x' => 4,
-						'y'=> Config::FONT_SIZE+4,
+						'y'=> Config::FONT_SIZE+3,
 						'span_x' => Config::WIDTH-4
 					)
 				),
@@ -60,7 +60,7 @@
 					),
 					'text' => array(
 						'x' => 4,
-						'y'=> Config::FONT_SIZE+2,
+						'y'=> Config::FONT_SIZE+1,
 						'span_x' => Config::WIDTH-4
 					)
 				)
