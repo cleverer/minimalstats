@@ -8,6 +8,10 @@
 	*/
 	class View extends MS {
 		
+		private function title() {
+			echo 'View';
+		}
+		
 	}
 	
 	$view = new View();
