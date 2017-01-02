@@ -1,0 +1,13 @@
+<?php
+	// minimalstats v0.1
+	
+	namespace MinimalStats;
+	
+	class Config {
+		
+		const DB_HOST = '';
+		const DB_USER = '';
+		const DB_PASSWORD = '';
+		const DB_NAME = '';
+		
+	}
