@@ -12,7 +12,7 @@
 	
 		private $db = null;
 		
-		function __construct() {
+		function __construct($installer = false) {
 			
 			ob_start();
 			
@@ -25,8 +25,8 @@
 				$db->set_charset("utf8");
 				$this->db = $db;
 			} else if (!$installer) {
+				die();
 			}
-			
 		}
 		
 		function __destruct() {
