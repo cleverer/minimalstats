@@ -49,10 +49,10 @@
 		<title>MinimalStats<?php if (method_exists($this, 'title')) $this::title(); ?></title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 	</head>
-	<body class="pt-5">
+	<body style="padding-top:5rem;">
 		<nav class="navbar navbar-fixed-top navbar-light bg-faded">
 			<div class="container">
-				<a class="navbar-brand" href="/"><?php if(!empty(Config::SITE_NAME)) echo " – ".Config::SITE_NAME;?>MinimalStats</a>
+				<a class="navbar-brand" href="/"><?php if(!empty(Config::SITE_NAME)) echo Config::SITE_NAME;?></a>
 				<button class="navbar-toggler hidden-md-up float-xs-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"></button>
 				<div class="collapse navbar-toggleable-sm nav navbar-nav" id="navbarResponsive" style="clear: right;">
 					<a class="nav-item nav-link" href="view.php">View</a>
