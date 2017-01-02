@@ -20,5 +20,3 @@
 	
 	$installer = new Installer();
 ?>
-
-Test
