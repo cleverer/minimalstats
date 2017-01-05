@@ -4,12 +4,12 @@ Still at a **very early** developement phase.
 
 ## TODO
 * Update Readme with installation
+* db.php
+	* connect()
 * installer.php
 	* Database creation
 	* Check for installed version/database
 	* Config check
-* config.php
-	* Table Prefix
 * counter.php
 	* User processing
 * view.php
@@ -22,7 +22,7 @@ Still at a **very early** developement phase.
 ## Installation
 ### System requirements:
 * Apache
-* PHP >= 5.4.0
+* PHP >= 5.3.0
 	* mysqli extension
 * MySQL DB
 
