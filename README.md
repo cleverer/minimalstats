@@ -4,6 +4,8 @@ Still at a **very early** developement phase.
 
 ## TODO
 * Update Readme with installation
+* config.php
+	* rewrite to use parse_ini()
 * db.php
 	* connect()
 * installer.php

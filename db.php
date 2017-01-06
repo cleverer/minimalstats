@@ -1,5 +1,7 @@
 <?php
 	namespace MinimalStats;
+	
+	use \mysqli as mysqli; 
 	/**
 	* DB
 	* Database abstractions
@@ -9,10 +11,10 @@
 		protected $db = null;
 		
 		public function connect() {
-			$db = @new \mysqli(Config::DB_HOST, Config::DB_USER, Config::DB_PASSWORD, Config::DB_NAME);
+			$db = @new mysqli(Config::DB_HOST, Config::DB_USER, Config::DB_PASSWORD, Config::DB_NAME);
 				
 			if ($db->connect_errno) {
-				throw // 'Connect Error: ' . $db->connect_errno."\n".$db->connect_error
+				throw ErrorException($db->connect_error, $db->connect_errno);
 			}
 			$db->set_charset("utf8");
 			$this->db = $db;

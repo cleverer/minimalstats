@@ -8,11 +8,17 @@
 	*/
 	class Installer extends MS {
 		
+		protected $dbError = null;
+		
 		function __construct() {
 			
-			parent::__construct(true);
-			
-			if (empty(Config::DB_HOST) || empty(Config::DB_USER) || empty(Config::DB_PASSWORD) || empty(Config::DB_NAME)) {
+			try {
+				parent::__construct(true);
+			}
+			catch (Exception $e) {
+				$this->dbError = $e;
+			}
+			if (!isset(Config::DB_HOST) || !isset(Config::DB_USER) || !isset(Config::DB_PASSWORD) || !isset(Config::DB_NAME)) {
 				echo '<div class="alert alert-danger">Please Configure the db!</div>';
 			}
 		}
@@ -58,7 +64,7 @@ EOS;
 		}
 		
 		function checkConfig() {
-			if (0 != $this->db->connect_errno) {
+			if (null !== $this->dbError) {
 				echo '<div class="alert alert-warning"><strong>Database Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$this->db->connect_error.'</div>'; // TODO: Localization
 			} else {
 				echo '<div class="alert alert-success"><strong>Database Works.</strong></div>'; // TODO: Localization

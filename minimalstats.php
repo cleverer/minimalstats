@@ -27,20 +27,19 @@
 			
 			ob_start();
 			
-			if (!empty(Config::DB_HOST) && !empty(Config::DB_USER) && !empty(Config::DB_PASSWORD) && !empty(Config::DB_NAME)) {
+			if (isset(Config::DB_HOST) && isset(Config::DB_USER) && isset(Config::DB_PASSWORD) &&  isset(Config::DB_NAME)) {
 				$db = new DB;
 				
 				try {
 					$db->connect();
 				}
-				catch {
+				catch (Exception $e) {
 					if (true !== $installer) {
-						error_log('Connect Error: ' . $db->connect_errno."\n".$db->connect_error);
+						error_log('Connect Error: ' . $e->message."\n".$e->code);
 						$this->outputPage = false;
 						die();
 					}
 				}
-				$this->db = $db;
 			} else if (true !== $installer) {
 				$this->outputPage = false;
 				die();

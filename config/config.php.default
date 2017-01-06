@@ -5,10 +5,10 @@
 	
 	class Config {
 		
-		const DB_HOST = '';
-		const DB_USER = '';
-		const DB_PASSWORD = '';
-		const DB_NAME = '';
+		const DB_HOST = null;
+		const DB_USER = null;
+		const DB_PASSWORD = null;
+		const DB_NAME = null;
 		
 		const DB_TABLE_PREFIX = 'ms_';
 
