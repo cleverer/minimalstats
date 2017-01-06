@@ -33,7 +33,7 @@
 		}
 		
 		protected function additionalScripts($echo = false) {
-			$scripts = $this->get_include_contents($_SERVER['DOCUMENT_ROOT'].'/templates/copy.js');
+			$scripts = $this->get_include_contents($_SERVER['DOCUMENT_ROOT'].'/templates/copy.php');
 			self::echoOrReturn($scripts, $echo);
 		}
 		
