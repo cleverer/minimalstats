@@ -11,7 +11,7 @@
 	class MS {
 	
 		protected $db = null;
-		protected $config = array();
+		protected $config = false;
 		
 		private $outputPage;
 		
