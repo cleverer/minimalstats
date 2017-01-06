@@ -11,6 +11,8 @@
 	class MS {
 	
 		protected $db = null;
+		protected $config = array();
+		
 		private $outputPage;
 		
 		static function echoOrReturn($string, $echo = false) {
@@ -27,11 +29,18 @@
 			
 			ob_start();
 			
-			if (isset(Config::DB_HOST) && isset(Config::DB_USER) && isset(Config::DB_PASSWORD) &&  isset(Config::DB_NAME)) {
+			$this->config = parse_ini_file('config/config.ini');
+			
+			if (false === $this->config && true !== $installer) {
+				$this->outputPage = false;
+				die();
+			}
+			
+			if (isset($this->config['DB_HOST']) && isset($this->config['DB_USER']) && isset($this->config['DB_PASSWORD']) &&  isset($this->config['DB_NAME'])) {
 				$db = new DB;
 				
 				try {
-					$db->connect();
+					$db->connect($this->config['DB_HOST'], $this->config['DB_USER'], $this->config['DB_PASSWORD'], $this->config['DB_NAME']);
 				}
 				catch (Exception $e) {
 					if (true !== $installer) {

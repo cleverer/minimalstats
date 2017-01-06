@@ -18,7 +18,12 @@
 			catch (Exception $e) {
 				$this->dbError = $e;
 			}
-			if (!isset(Config::DB_HOST) || !isset(Config::DB_USER) || !isset(Config::DB_PASSWORD) || !isset(Config::DB_NAME)) {
+			
+			if (false === $this->config) {
+				echo '<div class="alert alert-danger">Something\'s wrong with your config file.</div>';
+			}
+			
+			if (!isset($this->config['DB_HOST']) || !isset($this->config['DB_USER']) || !isset($this->config['DB_PASSWORD']) || !isset($this->config['DB_NAME'])) {
 				echo '<div class="alert alert-danger">Please Configure the db!</div>';
 			}
 		}

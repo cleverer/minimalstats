@@ -10,8 +10,8 @@
 		
 		protected $db = null;
 		
-		public function connect() {
-			$db = @new mysqli(Config::DB_HOST, Config::DB_USER, Config::DB_PASSWORD, Config::DB_NAME);
+		public function connect($host, $user, $pwd, $name) {
+			$db = @new mysqli($host, $user, $pwd, $name);
 				
 			if ($db->connect_errno) {
 				throw ErrorException($db->connect_error, $db->connect_errno);

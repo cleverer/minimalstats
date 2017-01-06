@@ -1,0 +1,22 @@
+
+; minimalstats v0.1
+
+	
+;DB_HOST = '';
+;DB_USER = '';
+;DB_PASSWORD = '';
+;DB_NAME = '';
+
+DB_TABLE_PREFIX = 'ms_';
+
+;SITE_NAME = '';
+
+LINE_COLOR = 'forestgreen';
+BACKGROUND_COLOR = '#f7f7f9';
+
+LINE_POSITION = 'top';
+
+; Probably leave these alone and size the image on your page.
+WIDTH = 90;
+HEIGHT = 20;
+FONT_SIZE = '12px';
