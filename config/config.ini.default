@@ -16,7 +16,7 @@ BACKGROUND_COLOR = '#f7f7f9';
 
 LINE_POSITION = 'top';
 
-; Probably leave these alone and size the image on your page.
+; Probably leave these alone and size the SVG-image on your page.
 WIDTH = 90;
 HEIGHT = 20;
 FONT_SIZE = '12px';

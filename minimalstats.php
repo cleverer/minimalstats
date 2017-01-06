@@ -1,7 +1,10 @@
 <?php
 	namespace MinimalStats;
+	
+	use \Exception as Exception;
 
 	require_once 'config/config.php';
+	require_once 'db.php';
 		
 	/**
 	* MS
@@ -15,6 +18,8 @@
 		
 		private $outputPage;
 		
+		// Helper functions
+		
 		static function echoOrReturn($string, $echo = false) {
 			if ($echo) {
 				echo $string;
@@ -22,6 +27,19 @@
 				return $string;
 			}
 		}
+		
+		static function get_include_contents($filename) {
+			if (is_file($filename)) {
+				ob_start();
+				include $filename;
+				$contents = ob_get_contents();
+				ob_end_clean();
+				return $contents;
+			}
+			return false;
+		}
+		
+		// Object Lifecycle
 		
 		function __construct($installer = null, $outputPage = true) {
 						
@@ -37,16 +55,18 @@
 			}
 			
 			if (isset($this->config['DB_HOST']) && isset($this->config['DB_USER']) && isset($this->config['DB_PASSWORD']) &&  isset($this->config['DB_NAME'])) {
-				$db = new DB;
+				$db = new DB();
 				
 				try {
 					$db->connect($this->config['DB_HOST'], $this->config['DB_USER'], $this->config['DB_PASSWORD'], $this->config['DB_NAME']);
 				}
 				catch (Exception $e) {
 					if (true !== $installer) {
-						error_log('Connect Error: ' . $e->message."\n".$e->code);
+						error_log('Connect Error: ' . $e->getMessage()."\n".$e->getCode());
 						$this->outputPage = false;
 						die();
+					} else {
+						throw $e;
 					}
 				}
 			} else if (true !== $installer) {
