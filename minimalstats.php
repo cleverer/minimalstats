@@ -3,7 +3,6 @@
 	
 	use \Exception as Exception;
 
-	require_once 'config/config.php';
 	require_once 'db.php';
 		
 	/**
