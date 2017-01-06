@@ -1,4 +1,10 @@
 <?php
+/*
+	--------------------------------------------------------
+	minimalstats
+	created by Nicolas Da Mutten, www.nicolas.damutten.ch
+	--------------------------------------------------------
+*/
 	namespace MinimalStats;
 	
 	use \mysqli as mysqli;

@@ -1,4 +1,10 @@
 <?php
+/*
+	--------------------------------------------------------
+	minimalstats v0.1
+	created by Nicolas Da Mutten, www.nicolas.damutten.ch
+	--------------------------------------------------------
+*/
 	namespace MinimalStats;
 	
 	use \Exception as Exception;

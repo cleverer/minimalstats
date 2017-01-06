@@ -1,6 +1,4 @@
-<?php
-	namespace MinimalStats;
-?><!DOCTYPE html>
+<?php namespace MinimalStats; ?><!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">

@@ -1,4 +1,10 @@
 <?php
+/*
+	--------------------------------------------------------
+	minimalstats
+	created by Nicolas Da Mutten, www.nicolas.damutten.ch
+	--------------------------------------------------------
+*/
 	namespace MinimalStats;
 	
 	require_once 'minimalstats.php';

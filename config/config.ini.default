@@ -1,7 +1,9 @@
+; --------------------------------------------------------
+; minimalstats
+; --------------------------------------------------------
 
-; minimalstats v0.1
+[database]
 
-	
 ;DB_HOST = '';
 ;DB_USER = '';
 ;DB_PASSWORD = '';
@@ -9,8 +11,11 @@
 
 DB_TABLE_PREFIX = 'ms_';
 
+[site]
+
 ;SITE_NAME = '';
 
+[counter]
 LINE_COLOR = 'forestgreen';
 BACKGROUND_COLOR = '#f7f7f9';
 
