@@ -76,7 +76,7 @@
 			$positions = $linePositionValues[$this->config['LINE_POSITION']];
 			
 			ob_start();
-			include 'templates/counter.php';
+			include $this->rootPath.'/templates/counter.php';
 			return ob_get_clean();
 		}
 		

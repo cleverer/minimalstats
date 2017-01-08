@@ -21,6 +21,8 @@
 		protected $db = null;
 		protected $config = false;
 		
+		protected $rootPath;
+		
 		private $outputPage;
 		
 		// Helper functions
@@ -33,7 +35,7 @@
 			}
 		}
 		
-		static function get_include_contents($filename) {
+		static function getIncludeContents($filename) {
 			if (is_file($filename)) {
 				ob_start();
 				include $filename;
@@ -41,7 +43,7 @@
 				ob_end_clean();
 				return $contents;
 			}
-			return false;
+			return '';
 		}
 		
 		// Object Lifecycle
@@ -49,6 +51,7 @@
 		function __construct($installer = null, $outputPage = true) {
 						
 			$this->outputPage = $outputPage;
+			$this->rootPath = __DIR__;
 			
 			ob_start();
 			

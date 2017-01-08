@@ -33,8 +33,8 @@
 		}
 		
 		protected function additionalScripts($echo = false) {
-			$scripts = $this->get_include_contents($_SERVER['DOCUMENT_ROOT'].'/templates/copy.php');
-			self::echoOrReturn($scripts, $echo);
+			$scripts = $this->getIncludeContents($this->rootPath.'/templates/copy.php');
+			self::echoOrReturn($scripts);
 		}
 		
 		private function createDB() {
