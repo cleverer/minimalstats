@@ -18,6 +18,13 @@
 		
 		protected $dbError = null;
 		
+		const $requiredConfig = [
+			'DB_HOST',
+			'DB_USER',
+			'DB_PASSWORD',
+			'DB_NAME'
+		]
+		
 		function __construct() {
 			
 			try {
@@ -46,8 +53,16 @@
 				echo '<div class="alert alert-danger">Something\'s wrong with your config file.</div>'; // TODO: Localization
 			}
 			
-			if (!isset($this->config['DB_HOST']) || !isset($this->config['DB_USER']) || !isset($this->config['DB_PASSWORD']) || !isset($this->config['DB_NAME'])) {
-				echo '<div class="alert alert-danger">Please Configure the db!</div>'; // TODO: Localization
+			
+			$configSet = true;
+			foreach (self::requiredConfig as $setting) {
+				if (!isset($this->config[$setting])) {
+					$configSet[] = $setting;
+				}
+			}
+			
+			if ($configSet!==true) {
+				echo '<div class="alert alert-danger">Please edit your config file. At least the following required setting-parameters are missing:'.implode(' ,', $setting).'</div>'; // TODO: Localization
 			} else if (null !== $this->dbError) {
 				echo '<div class="alert alert-warning"><strong>Database Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$this->dbError->getMessage().'</div>'; // TODO: Localization
 			} else {
