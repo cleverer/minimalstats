@@ -1,6 +1,6 @@
-# [minimalstats Documentation](/)
+# [minimalstats Documentation](../../)
 
-## [Class Reference](/classes/): MSException
+## [Class Reference](../classes/): MSException
 
 `Exception > MSException`
 
@@ -9,6 +9,7 @@
 `MSException` extends the standard Exception to also hold arbitrary data.
 
 ### Table of Contents
+
 * [Properties](#properties)
 * [Class functions](#class-functions)
 * [Instance methods](#instance-methods)
@@ -19,6 +20,7 @@
 * [`protected` data](#protected-data)
 
 #### `protected` data
+
 Holds arbitrary error data.
 
 ### Class functions
@@ -34,6 +36,7 @@ Constructor.
 * [`public` getData()](#public-getdata)
 
 #### `public` getData()
+
 Returns the data property.
 
 ### Error codes
