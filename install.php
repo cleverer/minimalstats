@@ -18,12 +18,12 @@
 		
 		protected $dbError = null;
 		
-		const $requiredConfig = [
+		const $requiredConfig = array(
 			'DB_HOST',
 			'DB_USER',
 			'DB_PASSWORD',
 			'DB_NAME'
-		]
+		);
 		
 		function __construct() {
 			
@@ -62,7 +62,7 @@
 			}
 			
 			if ($configSet!==true) {
-				echo '<div class="alert alert-danger">Please edit your config file. At least the following required setting-parameters are missing:'.implode(' ,', $setting).'</div>'; // TODO: Localization
+				echo '<div class="alert alert-danger">Please edit your config file. At least the following required setting-parameters are missing:'.implode(', ', $configSet).'</div>'; // TODO: Localization
 			} else if (null !== $this->dbError) {
 				echo '<div class="alert alert-warning"><strong>Database Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$this->dbError->getMessage().'</div>'; // TODO: Localization
 			} else {
