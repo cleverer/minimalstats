@@ -1,4 +1,4 @@
-# minimalstats Documentation
+# [minimalstats Documentation](../)
 
 ## Introduction
 

@@ -1,4 +1,4 @@
-# [minimalstats Documentation](../../)
+# [minimalstats Documentation](../)
 
 ## [Class Reference](../classes/): MSException
 
