@@ -1,6 +1,6 @@
 # minimalstats Documentation
 
-## Class Reference: MSException
+## [Class Reference](/classes/): MSException
 
 `MS`
 ### Introduction
