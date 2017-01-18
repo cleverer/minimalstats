@@ -3,7 +3,7 @@ Minimal page stat script.
 Still at a **very early** developement phase.
 
 ## TODO
-* Update Readme with installation
+* Update Readme according to https://guides.github.com/features/wikis/
 * installer.php
 	* Database creation
 	* Check for installed version/database
@@ -16,7 +16,7 @@ Still at a **very early** developement phase.
 * view.php
 	* Data visualization
 * Localization
-
+* Write Documentation
 
 ## Installation
 ### System requirements:

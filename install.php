@@ -16,14 +16,7 @@
 	*/
 	class Installer extends MS {
 		
-		protected $dbError = null;
-		
-		const $requiredConfig = array(
-			'DB_HOST',
-			'DB_USER',
-			'DB_PASSWORD',
-			'DB_NAME'
-		);
+		protected $constructError = null;
 		
 		function __construct() {
 			
@@ -31,7 +24,7 @@
 				parent::__construct(true);
 			}
 			catch (Exception $e) {
-				$this->dbError = $e;
+				$this->constructError = $e;
 			}
 		}
 		
@@ -49,27 +42,38 @@
 		}
 		
 		function checkConfig() {
-			if (false === $this->config) {
-				echo '<div class="alert alert-danger">Something\'s wrong with your config file.</div>'; // TODO: Localization
-			}
-			
-			
-			$configSet = true;
-			foreach (self::requiredConfig as $setting) {
-				if (!isset($this->config[$setting])) {
-					$configSet[] = $setting;
+			if (null === $this->constructError) {
+				
+				$working = array(
+					'Your config file looks fine.',
+					'Database Works.'
+				);
+				
+				echo '<div class="alert alert-success"><strong>'.implode("<br>\n", $working).'</strong></div>'; // TODO: Localization
+			} else {
+				if (is_a($this->constructError, get_class(new MSException()))) {
+					switch ($this->constructError->getCode()) {
+						case 1:
+							$message = '<strong>Couldn\'t read your config file.</strong>'; // TODO: Localization
+							break;
+						case 2:
+							$message = '<strong>Please edit your config file.</strong><br>At least the following required setting-parameters are missing: '.implode(', ', $this->constructError->getData()); // TODO: Localization
+							break;
+						case 3:
+							$message = '<strong>Database Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$this->constructError->getPrevious()->getMessage(); // TODO: Localization
+							break;
+						default:
+							$message = 'An unspecifed error occured. Error code: '.$this->constructError->getCode();
+							break;
+					}
+					
+					echo '<div class="alert alert-warning">'.$message.'</div>';
+					
+				} else {
+					throw $this->constructError;
 				}
 			}
-			
-			if ($configSet!==true) {
-				echo '<div class="alert alert-danger">Please edit your config file. At least the following required setting-parameters are missing:'.implode(', ', $configSet).'</div>'; // TODO: Localization
-			} else if (null !== $this->dbError) {
-				echo '<div class="alert alert-warning"><strong>Database Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$this->dbError->getMessage().'</div>'; // TODO: Localization
-			} else {
-				echo '<div class="alert alert-success"><strong>Database Works.</strong></div>'; // TODO: Localization
-			}
 		}
-		
 	}
 	
 	$installer = new Installer();

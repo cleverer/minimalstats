@@ -11,6 +11,22 @@
 
 	require_once 'db.php';
 		
+	class MSException extends Exception {
+		protected $data;
+		
+		public function __construct($message = null, $code = 0, Exception $previous = null, $data = null) {
+			
+			$this->data = $data;
+			
+			parent::__construct($message, $code, $previous);
+			
+		}
+		
+		public function getData() {
+			return $this->data;
+		}
+	}
+	
 	/**
 	* MS
 	* Parent class which provides standard functions
@@ -24,6 +40,13 @@
 		protected $rootPath;
 		
 		private $outputPage;
+		
+		const requiredConfig = array(
+			'DB_HOST',
+			'DB_USER',
+			'DB_PASSWORD',
+			'DB_NAME'
+		);
 		
 		// Helper functions
 		
@@ -48,38 +71,56 @@
 		
 		// Object Lifecycle
 		
-		function __construct($installer = null, $outputPage = true) {
+		function __construct($installer = false, $outputPage = true) {
 						
 			$this->outputPage = $outputPage;
 			$this->rootPath = __DIR__;
 			
 			ob_start();
 			
+			// try loading config
 			$this->config = parse_ini_file('config/config.ini');
 			
-			if (false === $this->config && true !== $installer) {
-				$this->outputPage = false;
-				die();
+			if (false === $this->config) {
+				if (true !== $installer) {
+					$this->outputPage = false;
+					die();
+				} else {
+					throw new MSException('Error loading config file.', 1);
+				}
 			}
 			
-			if (isset($this->config['DB_HOST']) && isset($this->config['DB_USER']) && isset($this->config['DB_PASSWORD']) &&  isset($this->config['DB_NAME'])) {
-				$db = new DB();
-				
-				try {
-					$db->connect($this->config['DB_HOST'], $this->config['DB_USER'], $this->config['DB_PASSWORD'], $this->config['DB_NAME']);
+			// Check for required config parameters
+			$missingConfig = array();
+			foreach (self::requiredConfig as $setting) {
+				if (!array_key_exists($setting, $this->config)) {
+					$missingConfig[] = $setting;
 				}
-				catch (Exception $e) {
-					if (true !== $installer) {
-						error_log('Connect Error: ' . $e->getMessage()."\n".$e->getCode());
-						$this->outputPage = false;
-						die();
-					} else {
-						throw $e;
-					}
+			}
+			
+			if (0 < count($missingConfig)) {
+				if (true !== $installer) {
+					$this->outputPage = false;
+					die();
+				} else {
+					throw new MSException(null, 2, null, $missingConfig);
 				}
-			} else if (true !== $installer) {
-				$this->outputPage = false;
-				die();
+			}
+			
+			// Setup DB
+			$db = new DB();
+			
+			try {
+				$db->connect($this->config['DB_HOST'], $this->config['DB_USER'], $this->config['DB_PASSWORD'], $this->config['DB_NAME']);
+			}
+			catch (Exception $e) {
+				if (true !== $installer) {
+					error_log('Connect Error: ' . $e->getMessage()."\n".$e->getCode());
+					$this->outputPage = false;
+					die();
+				} else {
+					throw new MSException(null, 3, $e);
+				}
 			}
 		}
 		
@@ -98,5 +139,4 @@
 				echo $output;
 			}
 		}
-		
 	}
