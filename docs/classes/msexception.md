@@ -8,7 +8,7 @@
 
 `MSException` extends the standard Exception to also hold arbitrary data.
 
-### Table of Contents
+### Table of contents
 
 * [Properties](#properties)
 * [Class functions](#class-functions)
@@ -43,6 +43,6 @@ Returns the data property.
 
 Code | Description
 ---|---
-1|Error loading ini file. See `parse_ini_file()`.
-2|Not all required config params were set.
-3|Database connect error. Previous Exception contains mysql exception.
+1|Error loading `config.ini` file. See `parse_ini_file()`.
+2|Not all required config params were set in `config.ini`.
+3|Database connect error. `$previous` contains the mysql exception, which you can access with `getPrevious()`.
