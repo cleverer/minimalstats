@@ -1,4 +1,5 @@
 # minimalstats Documentation
+
 ## Introduction
 
 To be done…
