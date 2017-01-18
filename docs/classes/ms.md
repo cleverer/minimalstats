@@ -22,7 +22,7 @@ Holds arbitrary error data.
 
 ### Class functions
 
-* [__construct()](#public-__constructmessage--null-code--0-exception-previous--null-data--null)
+* [__construct()](#public-constructmessage--null-code--0-exception-previous--null-data--null)
 
 #### `public` __construct($message = null, $code = 0, Exception $previous = null, $data = null)
 
