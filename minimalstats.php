@@ -10,23 +10,8 @@
 	use \Exception as Exception;
 
 	require_once 'db.php';
+	require_once 'msexception.php';
 		
-	class MSException extends Exception {
-		protected $data;
-		
-		public function __construct($message = null, $code = 0, Exception $previous = null, $data = null) {
-			
-			$this->data = $data;
-			
-			parent::__construct($message, $code, $previous);
-			
-		}
-		
-		public function getData() {
-			return $this->data;
-		}
-	}
-	
 	/**
 	* MS
 	* Parent class which provides standard functions
