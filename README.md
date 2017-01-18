@@ -2,8 +2,10 @@
 Minimal page stat script.  
 Still at a **very early** developement phase.
 
+You can find the documentation on: <https://cleverer.github.io/minimalstats/>
+
 ## TODO
-* Update Readme according to https://guides.github.com/features/wikis/
+* Update Readme according to <https://guides.github.com/features/wikis/>
 * installer.php
 	* Database creation
 	* Check for installed version/database
