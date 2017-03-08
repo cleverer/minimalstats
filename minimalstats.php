@@ -54,6 +54,41 @@
 			return '';
 		}
 		
+		protected static function loadConfig() {
+			
+			// try loading config
+			$config = parse_ini_file('config/config.ini');
+			
+			if (false === $config) {
+				throw new MSException('Error loading config file.', 1);
+			}
+			
+			// Check for required config parameters
+			$missingConfig = array();
+			foreach (self::requiredConfig as $setting) {
+				if (!array_key_exists($setting, $config)) {
+					$missingConfig[] = $setting;
+				}
+			}
+			
+			if (0 < count($missingConfig)) {
+				throw new MSException(null, 2, null, $missingConfig);
+			}
+			
+			return $config;
+		}
+		
+		protected static function initDB() {
+
+			// Setup DB
+			$db = new DB();
+
+			$db->connect($this->config['DB_HOST'], $this->config['DB_USER'], $this->config['DB_PASSWORD'], $this->config['DB_NAME']);
+			
+			return $db;
+
+		}
+		
 		// Object Lifecycle
 		
 		function __construct($installer = false, $outputPage = true) {
@@ -63,48 +98,23 @@
 			
 			ob_start();
 			
-			// try loading config
-			$this->config = parse_ini_file('config/config.ini');
-			
-			if (false === $this->config) {
-				if (true !== $installer) {
-					$this->outputPage = false;
-					die();
-				} else {
-					throw new MSException('Error loading config file.', 1);
-				}
-			}
-			
-			// Check for required config parameters
-			$missingConfig = array();
-			foreach (self::requiredConfig as $setting) {
-				if (!array_key_exists($setting, $this->config)) {
-					$missingConfig[] = $setting;
-				}
-			}
-			
-			if (0 < count($missingConfig)) {
-				if (true !== $installer) {
-					$this->outputPage = false;
-					die();
-				} else {
-					throw new MSException(null, 2, null, $missingConfig);
-				}
-			}
-			
-			// Setup DB
-			$db = new DB();
-			
 			try {
-				$db->connect($this->config['DB_HOST'], $this->config['DB_USER'], $this->config['DB_PASSWORD'], $this->config['DB_NAME']);
+				$this->config = self::loadConfig();	
 			}
-			catch (Exception $e) {
+			catch (MSException $e) {
 				if (true !== $installer) {
-					error_log('Connect Error: ' . $e->getMessage()."\n".$e->getCode());
 					$this->outputPage = false;
 					die();
-				} else {
-					throw new MSException(null, 3, $e);
+				}
+			}
+						
+			try {
+				$this->db = self::checkDB();
+			}
+			catch (MSException $e) {
+				if (true !== $installer) {
+					$this->outputPage = false;
+					die();
 				}
 			}
 		}
@@ -115,8 +125,7 @@
 				$this->db->close();
 			}
 			
-			$output = ob_get_contents();
-			ob_end_clean();
+			$output = ob_get_clean();
 						
 			if ($this->outputPage) {
 				include 'templates/basicpage.php';

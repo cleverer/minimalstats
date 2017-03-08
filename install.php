@@ -16,16 +16,11 @@
 	*/
 	class Installer extends MS {
 		
-		protected $constructError = null;
-		
 		function __construct() {
 			
-			try {
-				parent::__construct(true);
-			}
-			catch (Exception $e) {
-				$this->constructError = $e;
-			}
+			$this->outputPage = $outputPage;
+			$this->rootPath = __DIR__;
+			
 		}
 		
 		protected function title() {
@@ -42,7 +37,47 @@
 		}
 		
 		function checkConfig() {
-			if (null === $this->constructError) {
+			
+			$hasError = false;
+			
+			// Check and load config file
+			try {
+				$this->config = self::loadConfig();
+			}
+			catch (MSException $e) {
+				$hasError = true;
+				switch ($e->getCode()) {
+						case 1:
+							$message = '<strong>Couldn\'t read your config file.</strong>'; // TODO: Localization
+							break;
+						case 2:
+							$message = '<strong>Please edit your config file.</strong><br>At least the following required setting-parameters are missing: '.implode(', ', $this->constructError->getData()); // TODO: Localization
+							break;
+						default:
+							$message = 'An unspecifed error occured. Error code: '.$this->constructError->getCode(); // TODO: Localization
+							break;
+				}
+				echo '<div class="alert alert-warning">'.$message.'</div>';
+			}
+			
+			// Check and establish DB connection
+			try {
+				$this->config = self::loadConfig();
+			}
+			catch (MSException $e) {
+				$hasError = true;
+				switch ($e->getCode()) {
+						case 3:
+							$message = '<strong>Database Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$this->constructError->getPrevious()->getMessage(); // TODO: Localization
+							break;
+						default:
+							$message = 'An unspecifed error occured. Error code: '.$this->constructError->getCode();
+							break;
+				}
+				echo '<div class="alert alert-warning">'.$message.'</div>';
+			}
+			
+			if (false === $hasError) {
 				
 				$working = array(
 					'Your config file looks fine.',
@@ -50,28 +85,6 @@
 				);
 				
 				echo '<div class="alert alert-success"><strong>'.implode("<br>\n", $working).'</strong></div>'; // TODO: Localization
-			} else {
-				if (is_a($this->constructError, get_class(new MSException()))) {
-					switch ($this->constructError->getCode()) {
-						case 1:
-							$message = '<strong>Couldn\'t read your config file.</strong>'; // TODO: Localization
-							break;
-						case 2:
-							$message = '<strong>Please edit your config file.</strong><br>At least the following required setting-parameters are missing: '.implode(', ', $this->constructError->getData()); // TODO: Localization
-							break;
-						case 3:
-							$message = '<strong>Database Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$this->constructError->getPrevious()->getMessage(); // TODO: Localization
-							break;
-						default:
-							$message = 'An unspecifed error occured. Error code: '.$this->constructError->getCode();
-							break;
-					}
-					
-					echo '<div class="alert alert-warning">'.$message.'</div>';
-					
-				} else {
-					throw $this->constructError;
-				}
 			}
 		}
 	}
