@@ -27,4 +27,8 @@
 			$this->db = $db;
 		}
 		
+		public function close() {
+			
+		}
+		
 	}

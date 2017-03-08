@@ -24,7 +24,7 @@
 		
 		protected $rootPath;
 		
-		private $outputPage;
+		protected $outputPage;
 		
 		const requiredConfig = array(
 			'DB_HOST',
@@ -78,12 +78,17 @@
 			return $config;
 		}
 		
-		protected static function initDB() {
+		protected function initDB() {
 
 			// Setup DB
 			$db = new DB();
 
-			$db->connect($this->config['DB_HOST'], $this->config['DB_USER'], $this->config['DB_PASSWORD'], $this->config['DB_NAME']);
+			try {
+				$db->connect($this->config['DB_HOST'], $this->config['DB_USER'], $this->config['DB_PASSWORD'], $this->config['DB_NAME']);
+			}
+			catch (Exception $e) {
+				throw new MSException(null, 3, $e);
+			}
 			
 			return $db;
 
@@ -91,7 +96,7 @@
 		
 		// Object Lifecycle
 		
-		function __construct($installer = false, $outputPage = true) {
+		function __construct($outputPage = true) {
 						
 			$this->outputPage = $outputPage;
 			$this->rootPath = __DIR__;
@@ -100,33 +105,24 @@
 			
 			try {
 				$this->config = self::loadConfig();	
+				$this->db = $this->initDB();
 			}
 			catch (MSException $e) {
 				if (true !== $installer) {
 					$this->outputPage = false;
 					die();
 				}
-			}
-						
-			try {
-				$this->db = self::checkDB();
-			}
-			catch (MSException $e) {
-				if (true !== $installer) {
-					$this->outputPage = false;
-					die();
-				}
-			}
+			}						
 		}
 		
 		function __destruct() {
 			
+			$output = ob_get_clean();
+
 			if (null !== $this->db) {
 				$this->db->close();
 			}
-			
-			$output = ob_get_clean();
-						
+									
 			if ($this->outputPage) {
 				include 'templates/basicpage.php';
 			} else {

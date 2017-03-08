@@ -16,10 +16,12 @@
 	*/
 	class Installer extends MS {
 		
-		function __construct() {
+		function __construct($outputPage = true) {
 			
 			$this->outputPage = $outputPage;
 			$this->rootPath = __DIR__;
+			
+			ob_start();
 			
 		}
 		
@@ -51,41 +53,40 @@
 							$message = '<strong>Couldn\'t read your config file.</strong>'; // TODO: Localization
 							break;
 						case 2:
-							$message = '<strong>Please edit your config file.</strong><br>At least the following required setting-parameters are missing: '.implode(', ', $this->constructError->getData()); // TODO: Localization
+							$message = '<strong>Please edit your config file.</strong><br>At least the following required setting-parameters are missing: '.implode(', ', $e->getData()); // TODO: Localization
 							break;
 						default:
-							$message = 'An unspecifed error occured. Error code: '.$this->constructError->getCode(); // TODO: Localization
+							$message = 'An unspecifed error occured. Error code: '.$e->getCode(); // TODO: Localization
 							break;
 				}
 				echo '<div class="alert alert-warning">'.$message.'</div>';
+				return;
 			}
 			
 			// Check and establish DB connection
 			try {
-				$this->config = self::loadConfig();
+				$this->db = self::initDB();
 			}
 			catch (MSException $e) {
 				$hasError = true;
 				switch ($e->getCode()) {
 						case 3:
-							$message = '<strong>Database Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$this->constructError->getPrevious()->getMessage(); // TODO: Localization
+							$message = '<strong>Database Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$e->getPrevious()->getMessage(); // TODO: Localization
 							break;
 						default:
-							$message = 'An unspecifed error occured. Error code: '.$this->constructError->getCode();
+							$message = 'An unspecifed error occured. Error code: '.$e->getCode();
 							break;
 				}
 				echo '<div class="alert alert-warning">'.$message.'</div>';
+				return;
 			}
+							
+			$working = array(
+				'Your config file looks fine.',
+				'Database Works.'
+			);
 			
-			if (false === $hasError) {
-				
-				$working = array(
-					'Your config file looks fine.',
-					'Database Works.'
-				);
-				
-				echo '<div class="alert alert-success"><strong>'.implode("<br>\n", $working).'</strong></div>'; // TODO: Localization
-			}
+			echo '<div class="alert alert-success"><strong>'.implode("<br>\n", $working).'</strong></div>'; // TODO: Localization
 		}
 	}
 	
