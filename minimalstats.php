@@ -97,7 +97,7 @@
 		}
 		
 		protected function checkDBVersion() {
-			$dbVersion = $db->get(DB::tableKeys['metadata']);
+			$dbVersion = $this->db->get(DB::tableKeys['metadata']);
 			if ($dbVersion !== self::dbVersion) {
 				throw new MSException(null, 4);
 			}

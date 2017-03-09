@@ -16,8 +16,8 @@
 	class DB {
 		
 		const tableKeys = [
-			'metadata' = 'metadata',
-		]
+			'metadata' => 'metadata',
+		];
 		
 		protected $db = null;
 		

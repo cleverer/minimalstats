@@ -65,7 +65,7 @@
 			
 			// Check and establish DB connection
 			try {
-				$this->db = self::initDB();
+				$this->db = $this->initDB();
 			}
 			catch (MSException $e) {
 				$hasError = true;
