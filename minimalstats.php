@@ -33,6 +33,8 @@
 			'DB_NAME'
 		);
 		
+		const dbVersion = 1;
+		
 		// Helper functions
 		
 		static function echoOrReturn($string, $echo = false) {
@@ -94,6 +96,14 @@
 
 		}
 		
+		protected function checkDBVersion() {
+			$dbVersion = $db->get(DB::tableKeys['metadata']);
+			if ($dbVersion !== self::dbVersion) {
+				throw new MSException(null, 4);
+			}
+			return $dbVersion;
+		}
+		
 		// Object Lifecycle
 		
 		function __construct($outputPage = true) {
@@ -106,6 +116,7 @@
 			try {
 				$this->config = self::loadConfig();	
 				$this->db = $this->initDB();
+				$this->checkDBVersion();
 			}
 			catch (MSException $e) {
 				if (true !== $installer) {

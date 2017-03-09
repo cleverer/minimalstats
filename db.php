@@ -15,6 +15,10 @@
 	*/
 	class DB {
 		
+		const tableKeys = [
+			'metadata' = 'metadata',
+		]
+		
 		protected $db = null;
 		
 		public function connect($host, $user, $pwd, $name) {
@@ -28,6 +32,10 @@
 		}
 		
 		public function close() {
+			
+		}
+		
+		public function get($key) {
 			
 		}
 		

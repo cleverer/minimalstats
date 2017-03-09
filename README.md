@@ -9,7 +9,6 @@ You can find the documentation on: <https://cleverer.github.io/minimalstats/>
 * installer.php
 	* Database creation
 	* Check for installed version/database
-	* Config check
 * minimalstats.php
 	* Check for installation or else die
 	* Config check-method to check for required data and set defaults
