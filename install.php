@@ -81,6 +81,24 @@
 				return;
 			}
 							
+			// Check DB Version
+			try {
+				$this->checkDBVersion();
+			}
+			catch (MSException $e) { // Todo: Implement Logic to update/create Tables
+				$hasError = true;
+				switch ($e->getCode()) {
+						case 4:
+							$message = '<strong>Database Error.</strong> Database is not the newest version.'; // TODO: Localization
+							break;
+						default:
+							$message = 'An unspecifed error occured. Error code: '.$e->getCode();
+							break;
+				}
+				echo '<div class="alert alert-warning">'.$message.'</div>';
+				return;
+			}
+
 			$working = array(
 				'Your config file looks fine.',
 				'Database Works.'

@@ -36,7 +36,7 @@
 		}
 		
 		public function get($key) {
-			
+			return 1;
 		}
 		
 	}
