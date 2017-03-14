@@ -7,7 +7,6 @@
 */
 	namespace MinimalStats;
 	
-	use \mysqli as mysqli;
 	use \ErrorException as ErrorException;
 	/**
 	* DB
@@ -17,26 +16,22 @@
 		
 		const tableKeys = [
 			'metadata' => 'metadata',
+			'custom' => 'custom',
 		];
 		
-		protected $db = null;
-		
-		public function connect($host, $user, $pwd, $name) {
-			$db = @new mysqli($host, $user, $pwd, $name);
-				
-			if ($db->connect_errno) {
-				throw new ErrorException($db->connect_error, $db->connect_errno);
-			}
-			$db->set_charset("utf8");
-			$this->db = $db;
+		function __construct($host, $user, $pwd, $name) {
+			// Initialize Storage
+			// if an error occurs, throw an ErrorException
 		}
 		
-		public function close() {
-			
+		function __destruct() {
+			// If necessary release storage connections
 		}
 		
-		public function get($key) {
-			return 1;
+		public function get($key, $query = null) {
+			// Get data Specified with key
+			// if key is custom, use $query to get Data
+			return ;
 		}
 		
 	}

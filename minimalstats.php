@@ -9,7 +9,7 @@
 	
 	use \Exception as Exception;
 
-	require_once 'db.php';
+	require_once 'mysql.php';
 	require_once 'msexception.php';
 		
 	/**
@@ -30,7 +30,7 @@
 			'DB_HOST',
 			'DB_USER',
 			'DB_PASSWORD',
-			'DB_NAME'
+			'DB_NAME',
 		);
 		
 		const dbVersion = 1;
@@ -83,10 +83,13 @@
 		protected function initDB() {
 
 			// Setup DB
-			$db = new DB();
 
 			try {
-				$db->connect($this->config['DB_HOST'], $this->config['DB_USER'], $this->config['DB_PASSWORD'], $this->config['DB_NAME']);
+				switch ($this->config['DB_TYPE']) {
+					default:
+						$db = new MySQL($this->config['DB_HOST'], $this->config['DB_USER'], $this->config['DB_PASSWORD'], $this->config['DB_NAME']);
+						break;
+				}
 			}
 			catch (Exception $e) {
 				throw new MSException(null, 3, $e);
@@ -129,10 +132,6 @@
 		function __destruct() {
 			
 			$output = ob_get_clean();
-
-			if (null !== $this->db) {
-				$this->db->close();
-			}
 									
 			if ($this->outputPage) {
 				include 'templates/basicpage.php';
