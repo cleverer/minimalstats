@@ -34,17 +34,13 @@
 			return self::echoOrReturn($scripts, $echo);
 		}
 		
-		private function createDB() {
-			
-		}
-		
 		function checkConfig() {
 			
 			$hasError = false;
 			
 			// Check and load config file
 			try {
-				$this->config = self::loadConfig();
+				$this->config = $this->loadConfig();
 			}
 			catch (MSException $e) {
 				$hasError = true;
@@ -65,13 +61,13 @@
 			
 			// Check and establish DB connection
 			try {
-				$this->db = $this->initDB();
+				$this->initModel();
 			}
 			catch (MSException $e) {
 				$hasError = true;
 				switch ($e->getCode()) {
 						case 3:
-							$message = '<strong>Database Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$e->getPrevious()->getMessage(); // TODO: Localization
+							$message = '<strong>Storage Error.</strong><br>Please check your db-config. The following error occurred:<br>'.$e->getPrevious()->getMessage(); // TODO: Localization
 							break;
 						default:
 							$message = 'An unspecifed error occured. Error code: '.$e->getCode();
@@ -81,15 +77,15 @@
 				return;
 			}
 							
-			// Check DB Version
+			// Check Model Version
 			try {
-				$this->checkDBVersion();
+				$this->checkModelVersion();
 			}
 			catch (MSException $e) { // Todo: Implement Logic to update/create Tables
 				$hasError = true;
 				switch ($e->getCode()) {
 						case 4:
-							$message = '<strong>Database Error.</strong> Database is not the newest version.'; // TODO: Localization
+							$message = '<strong>Storage Error.</strong> Storage is not the newest version.'; // TODO: Localization
 							break;
 						default:
 							$message = 'An unspecifed error occured. Error code: '.$e->getCode();
@@ -101,7 +97,7 @@
 
 			$working = array(
 				'Your config file looks fine.',
-				'Database Works.'
+				'Storage Works.'
 			);
 			
 			echo '<div class="alert alert-success"><strong>'.implode("<br>\n", $working).'</strong></div>'; // TODO: Localization

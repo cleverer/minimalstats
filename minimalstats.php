@@ -19,21 +19,17 @@
 	
 	class MS {
 	
-		protected $db = null;
+		protected $model = null;
 		protected $config = false;
 		
 		protected $rootPath;
 		
 		protected $outputPage;
 		
-		const requiredConfig = array(
-			'DB_HOST',
-			'DB_USER',
-			'DB_PASSWORD',
-			'DB_NAME',
-		);
+		protected $requiredConfig = [
+		];
 		
-		const dbVersion = 1;
+		const modelVersion = 1;
 		
 		// Helper functions
 		
@@ -56,7 +52,7 @@
 			return '';
 		}
 		
-		protected static function loadConfig() {
+		protected function loadConfig() {
 			
 			// try loading config
 			$config = parse_ini_file('config/config.ini');
@@ -65,9 +61,22 @@
 				throw new MSException('Error loading config file.', 1);
 			}
 			
+			if (array_key_exists('MODEL_TYPE', $config)) {
+				$modelType = $config['MODEL_TYPE'];
+			} else {
+				$modelType = null;
+			}
+			switch ($modelType) {
+				case 'MYSQL':
+				default:
+					$this->model = new MySQL();
+					$this->requiredConfig = array_unique(array_merge($this->requiredConfig, MySQL::requiredConfig));
+					break;
+			}
+			
 			// Check for required config parameters
 			$missingConfig = array();
-			foreach (self::requiredConfig as $setting) {
+			foreach ($this->requiredConfig as $setting) {
 				if (!array_key_exists($setting, $config)) {
 					$missingConfig[] = $setting;
 				}
@@ -80,31 +89,29 @@
 			return $config;
 		}
 		
-		protected function initDB() {
+		protected function initModel() {
 
-			// Setup DB
-
+			// Setup Model
+			
+			$success = false;
+			
 			try {
-				switch ($this->config['DB_TYPE']) {
-					default:
-						$db = new MySQL($this->config['DB_HOST'], $this->config['DB_USER'], $this->config['DB_PASSWORD'], $this->config['DB_NAME']);
-						break;
-				}
+				$success = $this->model->init($this->config);
 			}
 			catch (Exception $e) {
 				throw new MSException(null, 3, $e);
 			}
 			
-			return $db;
+			return $success;
 
 		}
 		
-		protected function checkDBVersion() {
-			$dbVersion = $this->db->get(DB::tableKeys['metadata']);
-			if ($dbVersion !== self::dbVersion) {
+		protected function checkModelVersion() {
+			$modelVersion = $this->model->getMetadata(['modelVersion'])['modelVersion'];
+			if ($modelVersion !== self::modelVersion) {
 				throw new MSException(null, 4);
 			}
-			return $dbVersion;
+			return $modelVersion;
 		}
 		
 		// Object Lifecycle
@@ -117,9 +124,9 @@
 			ob_start();
 			
 			try {
-				$this->config = self::loadConfig();	
-				$this->db = $this->initDB();
-				$this->checkDBVersion();
+				$this->config = $this->loadConfig();	
+				$this->initModel();
+				$this->checkModelVersion();
 			}
 			catch (MSException $e) {
 				if (true !== $installer) {

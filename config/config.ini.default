@@ -2,12 +2,14 @@
 ; minimalstats
 ; --------------------------------------------------------
 
-[database]
+[model]
 
-;DB_HOST = '';
-;DB_USER = '';
-;DB_PASSWORD = '';
-;DB_NAME = '';
+;MODEL_TYPE = 'MYSQL';
+
+;MYSQL_HOST = '';
+;MYSQL_USER = '';
+;MYSQL_PASSWORD = '';
+;MYSQL_DB_NAME = '';
 
 DB_TABLE_PREFIX = 'ms_';
 

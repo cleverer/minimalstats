@@ -12,26 +12,12 @@
 	* DB
 	* Database abstractions
 	*/
-	class DB {
+	abstract class Model {
 		
-		const tableKeys = [
-			'metadata' => 'metadata',
-			'custom' => 'custom',
+		const requiredConfig = [
 		];
 		
-		function __construct($host, $user, $pwd, $name) {
-			// Initialize Storage
-			// if an error occurs, throw an ErrorException
-		}
-		
-		function __destruct() {
-			// If necessary release storage connections
-		}
-		
-		public function get($key, $query = null) {
-			// Get data Specified with key
-			// if key is custom, use $query to get Data
-			return ;
-		}
-		
+		abstract function init(Array $config): bool;
+		abstract function getMetadata(): Array;
+				
 	}
